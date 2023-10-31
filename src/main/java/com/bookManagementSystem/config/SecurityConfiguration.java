@@ -42,7 +42,7 @@ public class SecurityConfiguration {
 		http
 		.authorizeHttpRequests(request-> request
 				.requestMatchers("/api/v1/auth/**").permitAll()
-				.requestMatchers("/api/v1/book").permitAll()
+				.requestMatchers("/api/v1/book/All").permitAll()
 				.requestMatchers("/api/v1/admin/**").hasAnyRole(Role.ADMIN.name())
 				.requestMatchers("/api/v1/user/**").hasAnyRole(Role.USER.name())
 				.requestMatchers("/api/v1/user/delete/{id}").hasAnyRole(Role.ADMIN.name())
