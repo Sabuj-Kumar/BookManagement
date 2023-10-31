@@ -2,10 +2,7 @@ package com.bookManagementSystem.dto;
 
 import java.util.List;
 
-import com.bookManagementSystem.entities.User;
-
 public class BookDto {
-
 	private Integer id;
 	private String title;
 	private Integer pageCount;
@@ -13,7 +10,6 @@ public class BookDto {
 	private String description;
     private List<String> categories;
 	private String status;
-	private User user;
 	
 	public Integer getId() {
 		return id;
@@ -56,11 +52,5 @@ public class BookDto {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 }
