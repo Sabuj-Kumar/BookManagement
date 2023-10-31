@@ -5,10 +5,11 @@ import com.bookManagementSystem.dto.RefreshTokenRequest;
 import com.bookManagementSystem.dto.SignInRequest;
 import com.bookManagementSystem.dto.SignUpRequest;
 import com.bookManagementSystem.entities.User;
+import com.bookManagementSystem.payload.ChangPassRequest;
 
 public interface AuthenticationService {
 	public User signUp(SignUpRequest signUpRequest);
 	public JWTAuthResponse singIn(SignInRequest signInRequest);
 	public JWTAuthResponse refreshToken(RefreshTokenRequest refreshToken);
-	public Boolean forgatPassword(String email);
+	Boolean changePassword(ChangPassRequest changePassRequest);
 }

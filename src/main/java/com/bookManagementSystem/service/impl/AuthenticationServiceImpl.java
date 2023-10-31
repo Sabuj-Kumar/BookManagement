@@ -1,5 +1,6 @@
 package com.bookManagementSystem.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import com.bookManagementSystem.dto.SignInRequest;
 import com.bookManagementSystem.dto.SignUpRequest;
 import com.bookManagementSystem.entities.User;
 import com.bookManagementSystem.enums.Role;
+import com.bookManagementSystem.payload.ChangPassRequest;
 import com.bookManagementSystem.repository.UserRepository;
 import com.bookManagementSystem.service.AuthenticationService;
 import com.bookManagementSystem.service.JWTService;
@@ -42,6 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		User user = this.modelMapper.map(signUpRequest, User.class);
 		
 		user.setPassword(this.passwordEncode.encode(signUpRequest.getPassword()));
+		user.setCreatedDate(new Date());
 		if(user.getRole() == null) {
 			user.setRole(Role.USER);
 		}
@@ -89,9 +92,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public Boolean forgatPassword(String email) {
+	public Boolean changePassword(ChangPassRequest changePassRequest) {
 		
-		
-		return null;
+        if(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(changePassRequest.getClass(),changePassRequest.getPrePassword())).isAuthenticated()) {
+        	User user = userRepo.findByEmail(changePassRequest.getEmail()).orElseThrow(()-> new IllegalArgumentException("Invalid user and password"));
+        	
+        	user.setPassword(this.passwordEncode.encode(changePassRequest.getNewPassword()));
+        	
+        	userRepo.save(user);
+        	
+        	return true;
+        }
+        
+		return false;
 	}
 }

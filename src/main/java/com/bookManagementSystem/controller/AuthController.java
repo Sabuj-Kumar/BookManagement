@@ -13,6 +13,8 @@ import com.bookManagementSystem.dto.RefreshTokenRequest;
 import com.bookManagementSystem.dto.SignInRequest;
 import com.bookManagementSystem.dto.SignUpRequest;
 import com.bookManagementSystem.entities.User;
+import com.bookManagementSystem.payload.ApiResponse;
+import com.bookManagementSystem.payload.ChangPassRequest;
 import com.bookManagementSystem.service.AuthenticationService;
 
 @RestController
@@ -39,5 +41,15 @@ public class AuthController {
 	public ResponseEntity<JWTAuthResponse> refreshToken(@RequestBody RefreshTokenRequest refreshToken){
 		
 	  return new ResponseEntity<JWTAuthResponse>(this.authService.refreshToken(refreshToken),HttpStatus.OK);
+	}
+	
+	@PostMapping("change/password")
+	public ResponseEntity<ApiResponse> changePassword(@RequestBody ChangPassRequest changePassRequest){
+		Boolean isChange = this.authService.changePassword(changePassRequest);
+		
+		if(isChange) {
+			return new ResponseEntity<ApiResponse>(new ApiResponse("Password change succesfully",true),HttpStatus.OK);
+		}
+		return new ResponseEntity<ApiResponse>(new ApiResponse("User not Authorized",false),HttpStatus.UNAUTHORIZED);
 	}
 }

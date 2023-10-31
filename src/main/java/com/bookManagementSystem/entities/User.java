@@ -21,7 +21,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
@@ -33,24 +32,19 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	
-	@NotEmpty(message="User Can't be empty")
-	@NotNull(message="User Can't be nullable")
-	@Column(name="user_name", nullable=false,length=100)
+
 	private String userName;
+	private String fullName;
 	
 	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
 	@Column(name="email", nullable=false,length=100)
 	private String email;
-	
-	private String fullName;
 	
 	@Column(nullable=false)
 	@Size(min = 4, max = 64)
 	@NotEmpty(message="password Can't be Enpty")
 	private String password;
 	
-	@NotEmpty(message="Please give you role")
 	private Role role;
 	
 	private Date createdDate;
@@ -116,7 +110,7 @@ public class User implements UserDetails{
 	}
 	@Override
 	public String getUsername() {
-		return userName;
+		return email;
 	}
 	@Override
 	public boolean isAccountNonExpired() {

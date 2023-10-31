@@ -1,5 +1,6 @@
 package com.bookManagementSystem.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class BookServiceImpl implements BookService {
 		
         book = this.modelMapper.map(bookDto,Book.class);
 		
+        book.setPublishDate(new Date());
         Book createdBook = this.bookRepo.save(book);
 		
 		return this.modelMapper.map(createdBook,BookDto.class);

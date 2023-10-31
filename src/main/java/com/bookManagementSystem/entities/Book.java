@@ -27,13 +27,9 @@ public class Book {
 	@Column(name="title", nullable=false,length=100)
 	private String title;
 	
-	@NotEmpty(message="pageCount can't be empty")
-	@NotNull(message="pageCount Can't be nullable")
 	@Column(name="total_page", nullable=false,length=100)
 	private Integer pageCount;
 	
-	@NotEmpty(message="authors can't be empty")
-	@NotNull(message="authors Can't be nullable")
 	@Column(nullable=false,length=100)
 	private List<String> authors;
 	
@@ -43,8 +39,6 @@ public class Book {
 	
 	private Date publishDate;
 	
-	@NotEmpty(message="give status")
-	@NotNull(message="give status")
 	@Column(nullable=false,length=100)
 	private String status;
 
