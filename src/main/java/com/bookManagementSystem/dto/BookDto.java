@@ -1,6 +1,5 @@
 package com.bookManagementSystem.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import com.bookManagementSystem.entities.User;
@@ -13,7 +12,6 @@ public class BookDto {
 	private List<String> authors;
 	private String description;
     private List<String> categories;
-	private Date publishDate;
 	private String status;
 	private User user;
 	
@@ -52,12 +50,6 @@ public class BookDto {
 	}
 	public void setCategories(List<String> categories) {
 		this.categories = categories;
-	}
-	public Date getPublishDate() {
-		return publishDate;
-	}
-	public void setPublishDate(Date publishDate) {
-		this.publishDate = publishDate;
 	}
 	public String getStatus() {
 		return status;

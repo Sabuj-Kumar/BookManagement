@@ -6,7 +6,7 @@ import com.bookManagementSystem.dto.BookDto;
 
 public interface BookService {
 
-	BookDto createBook(BookDto bookDto);
+	BookDto createBook(BookDto bookDto,Integer userId);
 	BookDto getBookById(Integer id);
 	BookDto updateBook(BookDto bookDto,Integer id);
 	List<BookDto> getAllBook();

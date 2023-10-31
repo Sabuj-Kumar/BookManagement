@@ -25,10 +25,10 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@PostMapping("/create")
-	public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto){
+	@PostMapping("/create/{userId}")
+	public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto,@PathVariable Integer userId){
 		
-		BookDto createdBook =  this.bookService.createBook(bookDto);
+		BookDto createdBook =  this.bookService.createBook(bookDto,userId);
 		
 		return new ResponseEntity<BookDto>(createdBook,HttpStatus.CREATED);
 	}

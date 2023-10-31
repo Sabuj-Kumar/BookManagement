@@ -28,12 +28,13 @@ public class BookServiceImpl implements BookService {
 	UserRepository userRepo;
 	
 	@Override
-	public BookDto createBook(BookDto bookDto) {
+	public BookDto createBook(BookDto bookDto,Integer userId) {
         Book book = new Book();
-		
-        book = this.modelMapper.map(bookDto,Book.class);
+		User user = this.userRepo.findById(userId).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
+		book = this.modelMapper.map(bookDto,Book.class);
 		
         book.setPublishDate(new Date());
+        book.setUser(user); 
         Book createdBook = this.bookRepo.save(book);
 		
 		return this.modelMapper.map(createdBook,BookDto.class);
