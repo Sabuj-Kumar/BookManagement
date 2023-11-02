@@ -1,6 +1,8 @@
 package com.bookManagementSystem.enums;
 
-public enum Role {
+import java.io.Serializable;
+
+public enum Role implements Serializable{
 	USER,
-	ADMIN
+	ADMIN;
 }
