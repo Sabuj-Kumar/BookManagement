@@ -13,6 +13,7 @@ import com.bookManagementSystem.dto.UserDto;
 import com.bookManagementSystem.entities.Book;
 import com.bookManagementSystem.entities.User;
 import com.bookManagementSystem.exceptions.ResourceNotFoundExceptions;
+import com.bookManagementSystem.payload.EmailRequest;
 import com.bookManagementSystem.repository.BookRepository;
 import com.bookManagementSystem.repository.UserRepository;
 import com.bookManagementSystem.service.UserService;
@@ -98,8 +99,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDto getUserByEail(String email) {
-		User user = this.userRepo.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
+	public UserDto getUserByEail(EmailRequest emailRequest) {
+		User user = this.userRepo.findByEmail(emailRequest.getEmail()).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
 		
 		return this.modelMapper.map(user, UserDto.class);
 	}

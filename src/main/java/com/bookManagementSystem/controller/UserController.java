@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookManagementSystem.dto.UserDto;
 import com.bookManagementSystem.payload.ApiResponse;
+import com.bookManagementSystem.payload.EmailRequest;
 import com.bookManagementSystem.service.UserService;
 
 @RestController
@@ -46,14 +48,14 @@ public class UserController {
 	}
 	
 	@GetMapping("email")
-	public ResponseEntity<UserDto> getUserByEmail(@RequestBody String email){
+	public ResponseEntity<UserDto> getUserByEmail(@RequestParam EmailRequest emailRequest){
 		
-		UserDto user  = this.userService.getUserByEail(email);
+		UserDto user  = this.userService.getUserByEail(emailRequest);
 		
 		return new ResponseEntity<UserDto>(user,HttpStatus.OK);
 	}
 	
-	@PostMapping("{userId}/book/{bookId}")
+	@PostMapping("delete/{userId}/book/{bookId}")
 	public ResponseEntity<ApiResponse> deleteBookFromUser(@PathVariable Integer userId,@PathVariable Integer bookId){
 		
 		Boolean isDeleted = this.userService.deleteBookFromUser(userId, bookId);

@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.bookManagementSystem.enums.Role;
+import com.bookManagementSystem.service.JwtAuthenticationEntryPoint;
 import com.bookManagementSystem.service.UserService;
 
 @Configuration
@@ -26,7 +27,8 @@ public class SecurityConfiguration {
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	@Bean
 	AuthenticationProvider authenticationProvider() {
 	      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -40,18 +42,17 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http ) throws Exception{
 		
 		http
+		.csrf(AbstractHttpConfigurer::disable)
 		.authorizeHttpRequests(request-> request
-				.requestMatchers("/api/v1/auth/**").permitAll()
+				.requestMatchers("/api/v1/auth/*").permitAll()
+				.requestMatchers("/api/v1/admin/*").hasRole(Role.ADMIN.name())
+				.requestMatchers("/api/v1/user/*").hasRole(Role.USER.name())
 				.requestMatchers("/api/v1/book/All").permitAll()
-				.requestMatchers("/api/v1/admin/**").hasAnyRole(Role.ADMIN.name())
-				.requestMatchers("/api/v1/user/**").hasAnyRole(Role.USER.name())
-				.requestMatchers("/api/v1/user/delete/{id}").hasAnyRole(Role.ADMIN.name())
-				.requestMatchers("/api/v1/book/delete/{id}").hasAnyRole(Role.ADMIN.name())
 		        .anyRequest().authenticated()) 
 		.sessionManagement(manager-> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.authenticationProvider(authenticationProvider())
-		.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-		.csrf(AbstractHttpConfigurer::disable); 
+		.exceptionHandling(e -> e.authenticationEntryPoint(this.jwtAuthenticationEntryPoint))
+		.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		
 		
 		return http.build();
 	}

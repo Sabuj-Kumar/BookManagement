@@ -48,7 +48,7 @@ public class BookController {
 
 	}
 	
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<ApiResponse> deleteBook(@PathVariable Integer id){
 		
 		this.bookService.deleteBookDto(id);
