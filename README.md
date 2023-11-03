@@ -36,8 +36,7 @@
 
 /api/v1/auth/** permitall 
 /api/v1/book/All permitall 
-/api/v1/admin/**").hasAnyRole(Role.ADMIN.name()) 
-/api/v1/user/**").hasAnyRole(Role.USER.name()) 
-/api/v1/user/delete/{id}).hasAnyRole(Role.ADMIN.name()  
-/api/v1/book/delete/{id}).hasAnyRole(Role.ADMIN.name() 
+/api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name()) 
+/api/v1/user/**").hasAnyAuthority(Role.USER.name()) 
+
 
