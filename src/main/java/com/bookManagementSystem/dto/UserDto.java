@@ -3,8 +3,6 @@ package com.bookManagementSystem.dto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.bookManagementSystem.entities.Book;
 import com.bookManagementSystem.enums.Role;
 
 public class UserDto {
@@ -15,7 +13,7 @@ public class UserDto {
 	private Role role;
 	private String fullName;
 	private Date createdDate;
-	private List<Book> books = new ArrayList<Book>();
+	private List<BookDto> bookDto = new ArrayList<BookDto>();
 	
 	public Integer getId() {
 		return id;
@@ -53,10 +51,10 @@ public class UserDto {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public List<Book> getBooks() {
-		return books;
+	public List<BookDto> getBooks() {
+		return bookDto;
 	}
-	public void setBooks(List<Book> books) {
-		this.books = books;
+	public void setBooks(List<BookDto> books) {
+		this.bookDto = books;
 	}
 }

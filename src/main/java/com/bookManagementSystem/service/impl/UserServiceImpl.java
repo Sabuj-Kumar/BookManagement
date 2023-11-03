@@ -1,6 +1,7 @@
 package com.bookManagementSystem.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bookManagementSystem.dto.BookDto;
 import com.bookManagementSystem.dto.UserDto;
 import com.bookManagementSystem.entities.Book;
 import com.bookManagementSystem.entities.User;
@@ -46,7 +48,9 @@ public class UserServiceImpl implements UserService{
 	
 		User user = this.userRepo.findById(id).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
 		
-		user.setBooks(userDto.getBooks());
+		List<BookDto> bookDto = userDto.getBooks();
+		List<Book> bookList = bookDto.stream().map(book -> this.modelMapper.map(book,Book.class)).collect(Collectors.toList());
+		user.setBooks(bookList);
 		user.setEmail(userDto.getEmail());
 		user.setFullName(userDto.getFullName());
 		user.setUserName(userDto.getUserName());
@@ -72,19 +76,18 @@ public class UserServiceImpl implements UserService{
 		this.userRepo.delete(user);
 	}
 
-
 	@Override
 	public Boolean deleteBookFromUser(Integer userId, Integer bookId) {
 		
         User user = this.userRepo.findById(userId).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
 	    UserDto userDto = this.modelMapper.map(user, UserDto.class);
 	    Book book = this.bookRepo.findById(bookId).orElseThrow(() -> new ResourceNotFoundExceptions("Book not found", " Id ", bookId));
-	    List<Book> userBookList = userDto.getBooks();
+	    List<BookDto> userBookList = userDto.getBooks();
 	    
 	    if(userBookList.contains(book)) {
-	    	 List<Book> filterBook = userBookList.stream().filter((item)-> item.getId() != bookId).toList();
-	    	 
-	    	 user.setBooks(filterBook); 
+	    	 List<BookDto> filterBook = userBookList.stream().filter((item)-> item.getId() != bookId).toList();
+	    	 List<Book> bookList = filterBook.stream().map(bookdto -> this.modelMapper.map(bookdto,Book.class)).collect(Collectors.toList());
+	    	 user.setBooks(bookList); 
 	    	 
 	    	 User saveUser = this.userRepo.save(user);
 	    	 
