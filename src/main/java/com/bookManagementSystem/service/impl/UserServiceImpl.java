@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService{
 	    	 user.setBooks(bookList); 
 	    	 
 	    	 User saveUser = this.userRepo.save(user);
-	    	 
+	    	 System.out.println(saveUser);
 	    	 if(saveUser != null) {
 	    		 return true;
 	    	 }
@@ -113,12 +113,7 @@ public class UserServiceImpl implements UserService{
 		
 		User user = this.userRepo.findById(userId).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
 		
-		List<Book> bookList = user.getBooks();
-		
-		bookList.add(book);
-		
-		user.setBooks(bookList); 
-		
-		this.userRepo.save(user);
+        book.setUser(user);
+        this.bookRepo.save(book);
 	}
 }
